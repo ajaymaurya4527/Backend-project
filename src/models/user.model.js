@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
-import { Video } from "./video.model";
+
 
 const userSchem = new mongoose.Schema({
     username: { type: String, required: true, unique: true, lowercase: true, trim: true, index: true },//index is for optimization for search
@@ -20,7 +20,7 @@ const userSchem = new mongoose.Schema({
 userSchem.pre("save", async function (next) {//password encroption as next as middlewear and save is indicate before save the password pre indicate that
     if (!this.isModified("password")) return next();
 
-    this.password = bcrypt.hash(this.password, 10)
+    this.password =await bcrypt.hash(this.password, 10)
     next()
 
 })
