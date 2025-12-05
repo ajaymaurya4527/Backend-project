@@ -58,6 +58,15 @@ const registerUser=asyncHandler(async (req,res)=>{
         username:username.toLowercase()
     })
 
+    const createdUser=await user.findById(user._id).select("-password -refressToken")
+
+    if (!createdUser){
+        throw new apiErrors(500,"something went wrong while registtering the user")
+
+    }
+
+    return res.status(201).json(new apiResponse(200,createdUser,"user registered successfully"))
+
     
 
 
