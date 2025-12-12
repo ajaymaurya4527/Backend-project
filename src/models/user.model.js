@@ -51,6 +51,15 @@ const userSchema = new Schema(
         timestamps: true
     }
 )
+/* this code not run don't know the reason
+userSchema.pre("save", async function (next) {
+    if(!this.isModified("password")) return next();
+
+    this.password = await bcrypt.hash(this.password, 10)
+    next()
+})
+    */
+
 
 // No 'next' function needed when returning a Promise
 userSchema.pre("save", function () { 
